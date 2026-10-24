@@ -1,10 +1,10 @@
-import "./App.css";
-import PlanPage from "./pages/PlanPage";
+import "./App.scss";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <PlanPage />
+      <Home />
     </>
   );
 }
