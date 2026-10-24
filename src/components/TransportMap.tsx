@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Layer, Map, Source } from "react-map-gl/maplibre";
+import { setWorkerUrl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+
+setWorkerUrl(
+  new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).toString(),
+);
 
 type VehicleProperties = {
   id?: string;
@@ -94,31 +99,18 @@ const normalizeVehicleData = (value: unknown): VehicleCollection => {
 
 // Define how the vehicles should look.
 // Circles don't require external image sprites, making them bulletproof for raster maps.
-// const vehicleLayer = {
-//   id: "live-vehicles",
-//   type: "circle",
-//   source: "tfi-vehicles",
-//   paint: {
-//     "circle-radius": 100,
-//     "circle-color": "#00cc66",
-//     "circle-opacity": 0.95,
-//     "circle-stroke-width": 2,
-//     "circle-stroke-color": "#ffffff",
-//   },
-// } as const;
-
 const vehicleLayer = {
-  id: 'live-vehicles',
-  type: 'circle',
-  // IMPORTANT: Remove the `source: 'tfi-vehicles'` line here. 
-  // react-map-gl injects it automatically when nested inside <Source>.
+  id: "live-vehicles",
+  type: "circle",
+  source: "tfi-vehicles",
   paint: {
-    'circle-radius': 15, // Made it huge
-    'circle-color': '#ff0000', // Made it red
-    'circle-stroke-width': 3,
-    'circle-stroke-color': '#ffffff'
-  }
-};
+    "circle-radius": 8,
+    "circle-color": "#00cc66",
+    "circle-opacity": 0.95,
+    "circle-stroke-width": 2,
+    "circle-stroke-color": "#ffffff",
+  },
+} as const;
 
 const OSM_STYLE = {
   version: 8 as const,
@@ -148,7 +140,7 @@ export default function TransportMap() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/vehicles");
+        const response = await fetch("/api/vehicles");
         if (!response.ok) {
           throw new Error(`Vehicle backend returned HTTP ${response.status}`);
         }
