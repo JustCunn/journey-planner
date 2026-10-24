@@ -7,7 +7,7 @@ export async function getLiveTfiVehicles() {
   const response = await fetch(url, {
     headers: {
       'Cache-Control': 'no-cache',
-      'Ocp-Apim-Subscription-Key': "1e44806c9ade48789ba0e91a656c7207" // Your NTA portal key
+      'Ocp-Apim-Subscription-Key': "" // Your NTA portal key
     }
   });
 
